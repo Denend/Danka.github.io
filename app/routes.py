@@ -194,3 +194,6 @@ def register():
             flash('Congratulations, you are now a registred user!', 'success')
             return redirect(url_for('login'))
     return render_template('register.html', title=u'зарегай себя')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
