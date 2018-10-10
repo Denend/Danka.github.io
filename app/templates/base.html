@@ -26,24 +26,24 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header" id="myDIV" >
-          <a href ="#" class="navbar-brand">Potniy opros</a>
+          <a href ="#" class="navbar-brand">Pro Survey</a>
         </div>
         <div class="menu">
           <ul class="nav navbar-nav" >
-            <li ><a href="{{ url_for('home') }}">Домашняя</a></li>
-            <li ><a href="{{ url_for('opros') }}">Опрос</a></li>
-            <li ><a href="{{ url_for('statistic') }}" >Статистика</a></li>
-            <li ><a href="{{ url_for('about_us') }}">Контакты</a></li>
+            <li ><a href="{{ url_for('home') }}">Home</a></li>
+            <li ><a href="{{ url_for('opros') }}">Survey</a></li>
+            <li ><a href="{{ url_for('statistic') }}" >Statistics</a></li>
+            <li ><a href="{{ url_for('about_us') }}">Contact</a></li>
             {% if current_user.is_authenticated %}
-            <li> <a href="{{ url_for('flappy_yuras') }}">Зарубиться</a></li>
+            <li> <a href="{{ url_for('flappy_yuras') }}">Play game</a></li>
             {% endif %}
           </ul>
           <ul class = "nav navbar-nav navbar-right">
             {% if current_user.is_anonymous %}
-            <li ><a href="{{ url_for('register') }}">Зарегаца</a></li>
-            <li ><a href="{{ url_for('login') }}">Залогиница</a></li>
+            <li ><a href="{{ url_for('register') }}">Sign up</a></li>
+            <li ><a href="{{ url_for('login') }}">Log in</a></li>
             {% else %}
-            <li ><a href="{{ url_for('logout') }}">Выйти</a></li>
+            <li ><a href="{{ url_for('logout') }}">Log out</a></li>
             {% endif %}
           </ul>
         </div>
@@ -57,7 +57,7 @@
     {% block content %} {% endblock %}
 
     <blockquote class="blockquote-reverse">
-      <p class="text-info">Бухать это тебе не письку на заборе рисовать!</p>
+      <p class="text-info">Бухать это тебе не ****** на заборе рисовать!</p>
       <footer>Кирил Закурдаев</footer>
     </blockquote>
   </body>
