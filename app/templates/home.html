@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Йоу, дядь, тут домашняя страница</h1>
+  <h1 class="text-center">Here is home page </h1>
   {% if current_user.is_authenticated %}
-  <h3>Здаров, {{current_user.username}}!</h3>
-  <p>Только здесь у тебя есть возможность выиграть уникальную в своем роде фирменную футболку К-5, от самих создателей К-5</p>
-  <p>Тот у кого dd числа mm месяца в 12:00 по Киевскому времени будет иметь наибольшое количество очков, получит этот безценный трофей: </p>
-  <p> <a href="{{ url_for('flappy_yuras') }}">Зарубиться</a> </p>
+  <h3>Hello, {{current_user.username}}!</h3>
+  <p>Wellcome to the best survey web page you have ever faced</p>
+  <p>Please follow to "survey" button above id order to proceed</p>
+  <p> <a href="{{ url_for('flappy_yuras') }}">Play a cool game</a> </p>
   {% else %}
-  <h3>здаров, лагинся</h3>
-  <p>Только здесь у тебя есть возможность выиграть уникальную в своем роде фирменную футболку К-5, от самих создателей К-5</p>
-  <p>Регистрируйся, заходи и попытай удачу!</p>
+  <h3>Hey there, please log in</h3>
+  <p>Its gonna be the best web-page you've< ever seen, survey, statistics and games are looking forward for you!/p>
+  <p>Sign up to make sure!</p>
   {% endif %}
   <hr>
-  <h3>Всего зарегестрированых юзеров: {{ num_of_users }}</h3>
+  <h3>Overall registered: {{ num_of_users }} users</h3>
   </audio>
 {% endblock %}
