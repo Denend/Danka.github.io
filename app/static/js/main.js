@@ -30,7 +30,7 @@ $.ajax({
 
 
 
-  Chart.defaults.global.defaultFontFamily = '"Comic Sans MS", cursive, sans-serif';
+  //Chart.defaults.global.defaultFontFamily = '"Comic Sans MS", cursive, sans-serif';
   if(document.documentElement.clientWidth < 767 && document.documentElement.clientWidth >419) {
 Chart.defaults.global.defaultFontSize = 7;
 } else if (document.documentElement.clientWidth < 420)
@@ -42,11 +42,11 @@ Chart.defaults.global.defaultFontSize = 7;
   var barChart = new Chart(mySuperChart, {
     type: "pie",
     data: {
-      labels: ['хату сo шлюхами бухлищем',  'Выше перечисленное без шлюх','едем в КЭТ','Баночка и К5',
-              'Го в линас', "В экомаркет за пивасом и под падик(лакшери опшен)", 'Снимаем яхту плвать по Днепру',
-              'Впизду яхту, снимаем катамараны в Голосеевском парке', 'Та ну вас нахуй, чаек и сериальчик'],
+      labels: ['Trump forever',  'Putin is right','Obama was the best ','Merkel is doing gj',
+              'Ukraine is Europe', "Poroshenko is a good guy", 'Klichko is clever boy',
+              'Reagan was the best', 'Illuminati confirmed'],
       datasets: [{
-        label: "Количество позитивных ответов",
+        label: "Quantity of positive answers",
 
         data: [
           res1,
@@ -86,7 +86,7 @@ Chart.defaults.global.defaultFontSize = 7;
     },
     options: {
       title:{
-        text: "Ну шо результаты опросика",
+        text: "Here are the results",
         fontColor: "black",
         fontSize: 25,
         position: 'right'
@@ -226,22 +226,22 @@ var obj_opros={
 function validateUserName() {
   var d = [document.getElementById("mail"),document.getElementById("pass"),document.getElementById("pass1")]
   if(validation.msoutMail() == false){
-      $("#alert_error").html("Логин должен быть длиннее трех символов");
+      $("#alert_error").html("Login has to be longer then 3 symbols");
       $("#alert_error").show()
       return false;
   }
   else if(validation.msoutPass() == false) {
-      $("#alert_error").html("Дядя ну слабоват пароль, надо минимум 5 символов");
+      $("#alert_error").html("Password has to be at least 5 symbols long");
       $("#alert_error").show()
       return false;
   }
   else if(d[1].value != d[2].value){
-      $("#alert_error").html("ООй, не совпадают пароли");
+      $("#alert_error").html("Passwords dont match");
       $("#alert_error").show()
       return false;
   }
   else if(validation.msoutPass() == false || validation.msoutPass1() == false) {
-      $("#alert_error").html("Дядя ну слабоват пароль, надо минимум 4 символов");
+      $("#alert_error").html("Password has to be at least 5 symbols long");
       $("#alert_error").show()
       return false;
   }
