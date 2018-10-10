@@ -29,7 +29,7 @@
 </div>
 
 <div class ="container">
-<button class = "btn btn-success"id = "poigrat">Зарубиться</button>
+<button class = "btn btn-success"id = "poigrat">Play</button>
 <canvas id="canvas" width="288" height="512"></canvas>
 <p id="result"></p>
 </div>
@@ -37,13 +37,6 @@
   <script src="{{ url_for('static', filename = 'js/flappy_yuras/flappy_yuras.js') }}"></script>
 
 
-<ul>
-  <li>{{ top1name }}</li>
-  <li>{{ top1score }}</li>
-  <li>{{ top2name }}</li>
-  <li>{{ top2score }}</li>
-  <li>{{ top3name }}</li>
-  <li>{{ top3score }}</li>
-</ul>
+
 
 {% endblock %}
