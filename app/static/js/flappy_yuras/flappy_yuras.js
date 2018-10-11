@@ -18,9 +18,11 @@ ura_high.src = "/static/js/flappy_yuras/images/ura2.png";
 bg_vmazannue.src = "/static/js/flappy_yuras/images/bg_pash.png";
 var fly = new Audio();
 var score_aud = new Audio();
+var scoreLose = new Audio();
 //var score1_aud = new Audio();
 fly.src = "/static/js/flappy_yuras/audio/fly.wav";
 score_aud.src = "/static/js/flappy_yuras/audio/score.mp3";
+scoreLose.src = "/static/js/flappy_yuras/audio/lose.mp3";
 //score1_aud.src = "audio/score1.mp3";
 var gap = 150;
 var result = document.getElementById("result");
@@ -165,6 +167,7 @@ if(AnimSpeed == 1 && kosyaki[i].x==80){
 
 if(xPoz + ura.width >= shyshki[i].x && xPoz <= shyshki[i].x + shishlo.width && yPoz + ura.height/2 <=shyshki[i].y + shishlo.height && yPoz + ura.height/2 >= shyshki[i].y) {
   count += 1;
+ shyshki[i].y = -300
  run_interval();
 }
 if (yPoz <= 0 && counter_t == 25  && count < 50){
@@ -189,7 +192,7 @@ $.ajax({
  })
  .done(function(data) {
  });
-
+scoreLose.play();
 counter_t = 0;
 AnimSpeed = 1;
 count = 0;
@@ -199,6 +202,7 @@ xPoz = 10;
 yPoz = 150;
 //history.go(0)   // перезагружает всю страницу ваще
 } else {
+ scoreLose.play();
   counter_t = 0;
   AnimSpeed = 1;
   count = 0;
