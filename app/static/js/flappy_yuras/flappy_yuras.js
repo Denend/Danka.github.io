@@ -223,7 +223,7 @@ context.drawImage(ura, xPoz , yPoz);
 yPoz += graviton;
 context.fillStyle = "#000";
 context.font = "24px Verdana"
-context.fillText("Cчет:" + count, 90,cvs.height - 50)
+context.fillText("Score:" + count, 90,cvs.height - 50)
 //requestAnimationFrame(narisowat);
 }, 1000/60);
 
