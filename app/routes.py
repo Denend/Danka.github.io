@@ -13,7 +13,7 @@ from collections import OrderedDict
 def home():
     num_of_users = str(len(User.query.all()))
     name = User.query.filter_by(id=1).first()
-    return render_template('home.html', title=u'Дом, сука', num_of_users=num_of_users, name=name)
+    return render_template('home.html', title='Home', num_of_users=num_of_users, name=name)
 
 
 @app.route('/_opros_process', methods=['GET', 'POST'])
@@ -40,9 +40,9 @@ def opros_process():
 def opros():
     a = Answer.query.filter_by(user_id=current_user.id).count()
     if a > 0:
-        flash(u'уже проходил опрос', 'info')
+        flash('Survey was already completed', 'info')
         return redirect(url_for('home'))
-    return render_template('opros.html', title=u'Бро, пройди опросик')
+    return render_template('opros.html', title='Survey')
 
 
 @app.route('/_statistics_process', methods=['GET', 'POST'])
@@ -59,14 +59,14 @@ def statistics_process():
 def statistic():
     a = Answer.query.filter_by(user_id=current_user.id).count()
     if a == 0:
-        flash(u'пройди опрос и сможешь посмотреть статистику', 'info')
+        flash('Please complete the survey first, to see statistic', 'info')
         return redirect(url_for('opros'))
-    return render_template('statistic.html', title=u'дыбай шо там')
+    return render_template('statistic.html', title='Take a look at that!')
 
 
 @app.route('/about_us')
 def about_us():
-    return render_template('about_us.html', title=u'курлык')
+    return render_template('about_us.html', title='About us')
 
 
 @app.route('/f_y_process', methods=['GET', 'POST'])
@@ -81,26 +81,14 @@ def f_y_process():
     #if u.f_y_record == None:
         #u.f_y_record = 0
         #db.session.commit()
-    #print u.f_y_record
-    print current_user.f_y_record
     #u_record = u.f_y_record
     if int(result['count']) > u.f_y_record:
         u.f_y_record = int(result['count'])
         db.session.commit()
-    print u.f_y_record
     top3 = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[:3]
-    print top3
     top3dic = {}
     for i in top3:
         top3dic[i.username] = i.f_y_record
-    print top3dic
-
-
-    #sorted_top3 = sorted(top3dic.items(), key= itemgetter(0))
-    #print sorted_top3
-    #send_top3 = jsonify(sorted_top3)
-    #top3orderdic = OrderedDict(sorted(top3dic.items()))
-    #print top3orderdic
     return jsonify(top3dic)
 
 # Flappy Yuras view
@@ -145,18 +133,18 @@ def login():
 
         user = User.query.filter_by(username=username).first()
         if user is None or not user.check_password(password):
-            flash(u'Курлык, неправильный логин или пароль', 'danger')
+            flash('Username or password is incorrect', 'danger')
             return redirect(url_for('login'))
         # Passed
         session['logged_in'] = True
         session['username'] = username
         login_user(user, remember=remember_me)
-        flash(u'you are now logged in', 'success')
+        flash('you are now logged in', 'success')
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
         return redirect(next_page)
-    return render_template('login.html', title=u'залагинся')
+    return render_template('login.html', title='PLease login')
 
 
 # Logout
@@ -178,7 +166,7 @@ def register():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user is not None:
-            flash(u'Уже кто-то назвал себя так', 'danger')
+            flash('Someone has already registered with this username', 'danger')
             return redirect(url_for('register'))
         else:
             u = User(username=username)
@@ -193,7 +181,7 @@ def register():
             #db.session.commit()
             flash('Congratulations, you are now a registred user!', 'success')
             return redirect(url_for('login'))
-    return render_template('register.html', title=u'зарегай себя')
+    return render_template('register.html', title='Register')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
