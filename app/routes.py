@@ -5,9 +5,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Answer, Question
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
-import json
-from operator import itemgetter
-from collections import OrderedDict
+from json import dumps
+
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -19,10 +19,8 @@ def home():
 @app.route('/_opros_process', methods=['GET', 'POST'])
 def opros_process():
     #THe return type must be a str, tuple response instance, or WSGI callable
-    #answers = request.get_json()  json.loads(request.data)
     if request.method == 'POST':
         ans = request.get_json()
-        print ans
         for key in ans:
            q = Question.query.get(int(key))
            answer = Answer(qstion=q, author=current_user, ans=ans[key]['result'])
@@ -31,7 +29,6 @@ def opros_process():
         result = {}
         for i in range(1, 10):
             result[i] = Answer.query.filter_by(ans=True, question_id=i).count()
-        print result
         return jsonify(result)
 
 
@@ -50,7 +47,6 @@ def statistics_process():
     result = {}
     for i in range(1, 10):
         result[i] = Answer.query.filter_by(ans=True, question_id=i).count()
-    print result
     return jsonify(result)
 
 
@@ -72,48 +68,30 @@ def about_us():
 @app.route('/f_y_process', methods=['GET', 'POST'])
 def f_y_process():
     result = request.get_json()
-
-    #print result['count']
-
     u = User.query.filter_by(id=current_user.id).first()
-    #print u.f_y_record
-    #print current_user.f_y_record
-    #if u.f_y_record == None:
-        #u.f_y_record = 0
-        #db.session.commit()
-    #u_record = u.f_y_record
     if int(result['count']) > u.f_y_record:
         u.f_y_record = int(result['count'])
         db.session.commit()
     top3 = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[:3]
     top3dic = {}
-    for i in top3:
-        top3dic[i.username] = i.f_y_record
-    return jsonify(top3dic)
+    for div_id, i in enumerate(reversed(top3)):
+        top3dic[i.f_y_record] = [i.username, div_id]
+    return dumps(top3dic, indent=2, sort_keys=True)
+
 
 # Flappy Yuras view
 @app.route('/flappy_yuras')
 @login_required
 def flappy_yuras():
-    top1 = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[:1]
-    top2 = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[1:2]
-    top3 = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[2:3]
-    top1send = []
-    top2send = []
-    top3send = []
-    for i in top1:
-        top1send.append(i.username)
-        top1send.append(i.f_y_record)
-    for i in top2:
-        top2send.append(i.username)
-        top2send.append(i.f_y_record)
-    for i in top3:
-        top3send.append(i.username)
-        top3send.append(i.f_y_record)
-    print top1send
-    return render_template('flappy_yuras.html', top1name=top1send[0], top1score=top1send[1],
-                                                top2name=top2send[0], top2score=top2send[1],
-                                                top3name=top3send[0], top3score=top3send[1])
+    top3ls = []
+    for i in range(3):
+        top = User.query.filter(User.f_y_record>=0).order_by(User.f_y_record.desc())[i:i+1]
+        for u in top:
+            top3ls.append(u.username)
+            top3ls.append(u.f_y_record)
+    return render_template('flappy_yuras.html', top1name=top3ls[0], top1score=top3ls[1],
+                                                top2name=top3ls[2], top2score=top3ls[3],
+                                                top3name=top3ls[4], top3score=top3ls[5])
 
 
 #User Login
@@ -173,15 +151,7 @@ def register():
             u.set_password(password)
             db.session.add(u)
             db.session.commit()
-            #questions = ['question1', 'question2', 'question3', 'question4', 'question5', 'question6',
-                        #'question7', 'question8','question9','question10']
-            #for q in questions:
-                #qst = Question(body=q)
-                #db.session.add(qst)
-            #db.session.commit()
             flash('Congratulations, you are now a registred user!', 'success')
             return redirect(url_for('login'))
     return render_template('register.html', title='Register')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
