@@ -159,6 +159,9 @@ $.ajax({
       url : '/f_y_process'
  })
  .done(function(data) {
+   for(var i=0 in data){
+   $("#d" + data[i][1]).html(data[i][0] + ":" + i);
+   };
  });
 scoreLose.play();
 counter_t = 0;
