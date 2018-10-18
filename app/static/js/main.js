@@ -17,22 +17,6 @@ $.ajax({
 })
 .done(function(data) {
   const dataValues = Object.values(data);
-
- /* var res1 = data['1'];
-  var res2 = data['2'];
-  var res3 = data['3'];
-  var res4 = data['4'];
-  var res5 = data['5'];
-  var res6 = data['6'];
-  var res7 = data['7'];
-  var res8 = data['8'];
-  var res9 = data['9'];
-  */
-
-
-
-
-  //Chart.defaults.global.defaultFontFamily = '"Comic Sans MS", cursive, sans-serif';
   if(document.documentElement.clientWidth < 767 && document.documentElement.clientWidth >419) {
 Chart.defaults.global.defaultFontSize = 7;
 } else if (document.documentElement.clientWidth < 420)
@@ -51,15 +35,6 @@ Chart.defaults.global.defaultFontSize = 7;
         label: "Quantity of positive answers",
 
         data: [
-         /* res1,
-          res2,
-          res3,
-          res4,
-          res5,
-          res6,
-          res7,
-          res8,
-          res9  */
           dataValues[0],
           dataValues[1],
           dataValues[2],
@@ -69,7 +44,6 @@ Chart.defaults.global.defaultFontSize = 7;
           dataValues[6],
           dataValues[7],
           dataValues[8]
-
         ],
         backgroundColor:[
       "rgb(0, 191, 255)" ,
@@ -81,14 +55,7 @@ Chart.defaults.global.defaultFontSize = 7;
       "rgb(75, 0, 130)",
       "rgb(165, 42, 42)",
       "rgb(60, 179, 113)"
-
-
-
-
-
-
     ],
-
         borderWidth:1,
         borderColor:"#777",
         hoverBorderWidth:5,
@@ -108,17 +75,7 @@ Chart.defaults.global.defaultFontSize = 7;
     }
 
     }
-
   });
-/*$(window).resize(function() {
-  if(document.documentElement.clientWidth < 767 && document.documentElement.clientWidth >419) {
-  Chart.defaults.global.defaultFontSize = 7;
-} else if (document.documentElement.clientWidth < 420)
-{
-    Chart.defaults.global.defaultFontSize = 5;
-};
-});
-*/
 });
 };
    $(function () {
@@ -169,10 +126,7 @@ var validation = {
       };
     },
 }
-
 var object_send = {};
-
-
 var obj_opros={
   click_positive: function() {
     $(this).parents().eq(1).find("i").css("fontSize","30px");
@@ -186,36 +140,23 @@ var obj_opros={
     $(this).parents().eq(1).removeAttr("class");
     $(this).parents().eq(1).addClass("panel panel-default panel-danger");
   },
-
-
-
-  //};
   click_button_opros: function(){
-
-
     for(i=1;i<10;i++){
               result: 0,
               class_of_div = [];
               class_of_div[i] =  $('#opros_div'+i).attr('class'),
-
-
               result = class_of_div[i].includes("panel-success"),
               array_final = [];
               array_final[i] = result;
               object_send[i] = {
                 result,
               };
-
               if(class_of_div[i] == "panel panel-default panel-info"){
                 $("#alert_error_opros").show()
                 return false
               };
              };
-
-
-
             var json_string = JSON.stringify(object_send);
-            //alert(json_string);
              $.ajax({
           			data : json_string,
                 contentType: "application/json; charset=utf-8",
@@ -225,12 +166,8 @@ var obj_opros={
           			url : '/_opros_process'
           		})
           		.done(function(data) {
-                //alert(data["1"]);
-                //alert(JSON.stringify(data));
                 obj_stat1 = data
               });
-
-
   },
 };
 
@@ -257,9 +194,3 @@ function validateUserName() {
       return false;
   }
 };
-
-
-
-  //cur_url2 = location.href.substring(location.href.lastIndexOf('/'));
-//alert(cur_url2);
-//if(cur_url2 == "/statistics"){
