@@ -16,8 +16,9 @@ $.ajax({
   url : '/_statistics_process'
 })
 .done(function(data) {
+  const dataValues = Object.values(data);
 
-  var res1 = data['1'];
+ /* var res1 = data['1'];
   var res2 = data['2'];
   var res3 = data['3'];
   var res4 = data['4'];
@@ -26,6 +27,7 @@ $.ajax({
   var res7 = data['7'];
   var res8 = data['8'];
   var res9 = data['9'];
+  */
 
 
 
@@ -49,7 +51,7 @@ Chart.defaults.global.defaultFontSize = 7;
         label: "Quantity of positive answers",
 
         data: [
-          res1,
+         /* res1,
           res2,
           res3,
           res4,
@@ -57,7 +59,16 @@ Chart.defaults.global.defaultFontSize = 7;
           res6,
           res7,
           res8,
-          res9
+          res9  */
+          dataValues[0],
+          dataValues[1],
+          dataValues[2],
+          dataValues[3],
+          dataValues[4],
+          dataValues[5],
+          dataValues[6],
+          dataValues[7],
+          dataValues[8]
 
         ],
         backgroundColor:[
