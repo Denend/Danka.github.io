@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-$("body").on("click touchend","span",obj_opros.click_positive);
-$("body").on("click touchend","i",obj_opros.click_negative);
+$("body").on("click touchend",".extendable-success",obj_opros.click_positive);
+$("body").on("click touchend",".extendable-danger",obj_opros.click_negative);
 $("body").on("click touchend","#button_submit_opros",obj_opros.click_button_opros);
 $("#mail").mouseout(function (){validation.msoutMail()});
 $("#pass").mouseout(function(){validation.msoutPass()});
@@ -129,13 +129,13 @@ var validation = {
 var object_send = {};
 var obj_opros={
   click_positive: function() {
-    $(this).parents().eq(1).find("i").css("fontSize","30px");
+    $(this).parents().eq(1).find(".extendable-success").css("fontSize","30px");
     $(this).css("fontSize","40px");
     $(this).parents().eq(1).removeAttr("class");
     $(this).parents().eq(1).addClass("panel panel-default panel-success");
     },
   click_negative: function(){
-    $(this).parents().eq(1).find("span").css("fontSize","30px");
+    $(this).parents().eq(1).find(".extendable-danger").css("fontSize","30px");
     $(this).css("fontSize","40px");
     $(this).parents().eq(1).removeAttr("class");
     $(this).parents().eq(1).addClass("panel panel-default panel-danger");
