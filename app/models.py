@@ -8,9 +8,8 @@ from datetime import datetime
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-
     password_hash = db.Column(db.String(128))
-
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
     user_answers = db.relationship('Answer', backref='author', lazy='dynamic')
     f_y_record = db.Column(db.Integer, default=0)
     def __repr__(self):
