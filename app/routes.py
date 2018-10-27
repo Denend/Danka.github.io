@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask import render_template, url_for, redirect, flash, session, request, jsonify, send_from_directory, send_file, Response
-from app import app, db
+from app import app, db, captcha
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Answer, Question
+from app.models import User, Answer, Question, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.urls import url_parse
 from json import dumps
