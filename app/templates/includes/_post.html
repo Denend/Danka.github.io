@@ -1,0 +1,19 @@
+<table class="table table-hover">
+    <tr valign="top">
+          <td>
+              <b>{{ post.author.username }}</b>
+
+            <!--  said {{ moment(post.timestamp).fromNow() }}:   #this line must be comment -->
+
+                  <div class="header">
+                      <small class="pull-right text-muted">
+                      <span class="glyphicon glyphicon-time"></span>{{ moment(post.timestamp).fromNow() }}</small>
+                </div>
+
+              <br>
+              <div>
+              <p>{{ post.body }}</p>
+              </div>
+          </td>
+    </tr>
+</table>
