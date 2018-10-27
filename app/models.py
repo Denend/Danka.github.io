@@ -21,7 +21,18 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    def __repr__(self):
+        return 'id = {}, body = {}, time = {}, user id = {}'.format(
+                self.id, self.body, self.timestamp, self.user_id)
+    
+    
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(200))
