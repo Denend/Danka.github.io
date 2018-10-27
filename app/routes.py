@@ -8,12 +8,29 @@ from werkzeug.urls import url_parse
 from json import dumps
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     num_of_users = str(len(User.query.all()))
-    name = User.query.filter_by(id=1).first()
-    return render_template('home.html', title='Home', num_of_users=num_of_users, name=name)
+    if request.method == 'POST':
+        body = request.form['body']
+        if len(body) > 500 or len(body) < 1:
+            flash('the message must be between 1 and 500 symbols', 'info')
+            return redirect(url_for('home'))
+        else:
+            post = Post(body=body, author=current_user)
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for('home'))
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('home', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('home', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('home.html', title=u'Дом, сука', num_of_users=num_of_users, posts=posts.items,
+                            next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/_opros_process', methods=['GET', 'POST'])
@@ -144,14 +161,18 @@ def register():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user is not None:
-            flash('Someone has already registered with this username', 'danger')
+            flash(u'Уже кто-то назвал себя так', 'danger')
             return redirect(url_for('register'))
         else:
-            u = User(username=username)
-            u.set_password(password)
-            db.session.add(u)
-            db.session.commit()
-            flash('Congratulations, you are now a registred user!', 'success')
-            return redirect(url_for('login'))
-    return render_template('register.html', title='Register')
+            if captcha.validate():
+                u = User(username=username)
+                u.set_password(password)
+                db.session.add(u)
+                db.session.commit()
+                flash('Congratulations, you are now a registred user!', 'success')
+                return redirect(url_for('login'))
+            else:
+                flash('captcha is not right', 'danger')
+                return redirect(url_for('register'))
+    return render_template('register.html', title=u'зарегай себя')
 
