@@ -129,13 +129,13 @@ var validation = {
 var object_send = {};
 var obj_opros={
   click_positive: function() {
-    $(this).parents().eq(1).find(".extendable-success").css("fontSize","30px");
+    $(this).parents().eq(1).find(".extendable-danger").css("fontSize","30px");
     $(this).css("fontSize","40px");
     $(this).parents().eq(1).removeAttr("class");
     $(this).parents().eq(1).addClass("panel panel-default panel-success");
     },
   click_negative: function(){
-    $(this).parents().eq(1).find(".extendable-danger").css("fontSize","30px");
+    $(this).parents().eq(1).find(".extendable-success").css("fontSize","30px");
     $(this).css("fontSize","40px");
     $(this).parents().eq(1).removeAttr("class");
     $(this).parents().eq(1).addClass("panel panel-default panel-danger");
